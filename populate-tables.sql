@@ -30,7 +30,17 @@ INSERT INTO state (id, name) VALUES
     (17, 4, 'Orlando'),
     (18, 4, 'Jacksonville'),
     (19, 5, 'Peoria'),
-    (20, 5, 'Naperville');
+    (20, 5, 'Naperville'),
+    (21, 6, 'Columbus'), 
+    (22, 6, 'Cleveland'),
+    (23, 7, 'Atlanta'), 
+    (24, 7, 'Savannah'), 
+    (25, 8, 'Detroit'), 
+    (26, 8, 'Ann Arbor'),
+    (27, 9, 'Philadelphia'),
+    (28, 9, 'Pittsburgh'), 
+    (29, 10, 'Phoenix'),  
+    (30, 10, 'Tucson'); 
 
 
 INSERT INTO address (id, user_id, complement, number, cep, city_id) VALUES
