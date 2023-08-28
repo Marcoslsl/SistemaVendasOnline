@@ -1,8 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ name: 'name', nullable: false })
@@ -19,4 +25,13 @@ export class UserEntity {
 
   @Column({ name: 'password', nullable: false })
   password: string;
+
+  @Column({ name: 'type_user', nullable: false })
+  typeUser: number;
+
+  @CreateDateColumn({ name: 'created_at', type: 'bigint' })
+  createdAt: number;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
+  updatedAt: number;
 }

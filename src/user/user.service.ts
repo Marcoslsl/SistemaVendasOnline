@@ -17,11 +17,12 @@ export class UserService {
     const passwordHased = await hash(createUserDto.password, 10);
     const user = {
       ...createUserDto,
+      typeUser: 1,
       password: passwordHased,
     };
 
     const userCreated = await this.userRepository.create(user);
-    this.userRepository.save(userCreated);
+    await this.userRepository.save(userCreated);
     return userCreated;
   }
 
