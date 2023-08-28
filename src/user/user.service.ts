@@ -29,17 +29,18 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<UserEntity> {
+  async findOne(id: number): Promise<UserEntity | null> {
     return this.userRepository.findOneBy({
       id,
     });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
+    await this.userRepository.update(id, updateUserDto);
+    return await this.userRepository.findOneBy({ id });
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} user`;
+    return await this.userRepository.delete({ id });
   }
 }
