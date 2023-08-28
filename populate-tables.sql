@@ -20,7 +20,17 @@ INSERT INTO state (id, name) VALUES
     (7, 4, 'Miami'),
     (8, 4, 'Tampa'),
     (9, 5, 'Chicago'),
-    (10, 5, 'Springfield');
+    (10, 5, 'Springfield'),
+    (11, 1, 'San Diego'),
+    (12, 1, 'Sacramento'),
+    (13, 2, 'Rochester'),
+    (14, 2, 'Albany'),
+    (15, 3, 'Dallas'),
+    (16, 3, 'San Antonio'),
+    (17, 4, 'Orlando'),
+    (18, 4, 'Jacksonville'),
+    (19, 5, 'Peoria'),
+    (20, 5, 'Naperville');
 
 
 INSERT INTO address (id, user_id, complement, number, cep, city_id) VALUES
@@ -33,4 +43,13 @@ INSERT INTO address (id, user_id, complement, number, cep, city_id) VALUES
     (7, 107, 'No complement', 1234, '56789-012', 4),
     (8, 108, 'Apt 501', 5678, '89012-345', 6),
     (9, 109, 'Unit C', 9012, '67890-123', 8),
-    (10, 110, 'Default complement', 3456, '45678-901', 10);
+    (10, 110, 'Default complement', 3456, '45678-901', 10),
+    (11, 201, 'Apt 501', 123, '12345-678', 11),
+    (12, 202, 'No complement', 456, '98765-432', 13),
+    (13, 203, 'House 10', 789, '54321-876', 15),
+    (14, 204, 'Unit D', 321, '23456-789', 17),
+    (15, 205, 'Default complement', 654, '87654-321', 19),
+    (16, 206, 'Suite 5', 987, '34567-890', 12),
+    (17, 207, 'No complement', 1234, '56789-012', 14),
+    (18, 208, 'Apt 702', 5678, '89012-345', 16),
+    (19, 209, 'Unit E', 9012, '67890-123', 18);

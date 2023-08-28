@@ -36,4 +36,8 @@ export class CityService {
   async remove(id: number) {
     return await this.cityRepository.delete({ id });
   }
+
+  async getAllCitiesByStateId(id: number) {
+    return await this.cityRepository.findBy({ stateId: +id });
+  }
 }

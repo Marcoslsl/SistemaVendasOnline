@@ -1,4 +1,4 @@
 export class CreateCityDto {
-  stateId: string;
+  stateId: number;
   name: string;
 }
