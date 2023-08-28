@@ -12,9 +12,13 @@ export class AddressService {
     private readonly addressRepository: Repository<AddressEntity>,
   ) {}
 
-  async create(createAddressDto: CreateAddressDto): Promise<AddressEntity> {
-    const addressCreated =
-      await this.addressRepository.create(createAddressDto);
+  async create(
+    createAddressDto: CreateAddressDto,
+    userId: number,
+  ): Promise<AddressEntity> {
+    const address = { ...createAddressDto, userId };
+
+    const addressCreated = await this.addressRepository.create(address);
     await this.addressRepository.save(addressCreated);
     return addressCreated;
   }

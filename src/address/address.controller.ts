@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
@@ -7,9 +17,13 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Post()
-  create(@Body() createAddressDto: CreateAddressDto) {
-    return this.addressService.create(createAddressDto);
+  @Post('/:userId')
+  @UsePipes(ValidationPipe)
+  create(
+    @Body() createAddressDto: CreateAddressDto,
+    @Param('userId') userId: number,
+  ) {
+    return this.addressService.create(createAddressDto, userId);
   }
 
   @Get()
