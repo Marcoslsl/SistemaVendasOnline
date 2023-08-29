@@ -21,7 +21,6 @@ export class AddressService {
     userId: number,
   ): Promise<AddressEntity> {
     await this.userService.findOne(userId);
-    console.log(createAddressDto.cityId);
     await this.cityService.findOne(createAddressDto.cityId);
 
     const address = { ...createAddressDto, userId };

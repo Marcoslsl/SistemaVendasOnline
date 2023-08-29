@@ -12,17 +12,18 @@ import {
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { UserType } from 'src/user/enum/user-type.enum';
+import { UserId } from 'src/decorators/user-id.decorator';
 
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Post('/:userId')
+  @Roles(UserType.User)
+  @Post()
   @UsePipes(ValidationPipe)
-  create(
-    @Body() createAddressDto: CreateAddressDto,
-    @Param('userId') userId: number,
-  ) {
+  create(@Body() createAddressDto: CreateAddressDto, @UserId() userId: number) {
     return this.addressService.create(createAddressDto, userId);
   }
 
