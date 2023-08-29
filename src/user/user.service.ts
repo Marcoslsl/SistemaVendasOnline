@@ -36,7 +36,7 @@ export class UserService {
     });
 
     if (!user) {
-      throw new NotFoundException(`UserId = ${id} not Found`);
+      throw new NotFoundException(`UserId='${id}' not Found`);
     }
 
     return user;
