@@ -1,7 +1,10 @@
+import { CityEntity } from 'src/city/entities/city.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,7 +26,8 @@ export class AddressEntity {
   @Column({ name: 'cep', nullable: false })
   cep: string;
 
-  @Column({ name: 'city_id', nullable: false })
+  @ManyToOne(() => CityEntity, (city) => city.address)
+  @JoinColumn({ name: 'city_id' })
   cityId: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'bigint' })

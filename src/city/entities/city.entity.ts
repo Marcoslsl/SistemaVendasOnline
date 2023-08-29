@@ -1,7 +1,12 @@
+import { AddressEntity } from 'src/address/entities/address.entity';
+import { StateEntity } from 'src/state/entities/state.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,7 +16,8 @@ export class CityEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'state_id', nullable: false })
+  @ManyToOne(() => StateEntity, (state) => state.cities)
+  @JoinColumn({ name: 'state_id' }) // Especifica a coluna de junção
   stateId: number;
 
   @Column({ name: 'name', nullable: false })
@@ -22,4 +28,7 @@ export class CityEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
   updatedAt: number;
+
+  @OneToMany(() => AddressEntity, (add) => add.cityId)
+  address: AddressEntity[];
 }
