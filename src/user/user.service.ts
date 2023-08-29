@@ -57,7 +57,25 @@ export class UserService {
       where: {
         id: userId,
       },
-      relations: ['addresses'],
+      relations: {
+        addresses: {
+          city: {
+            state: true,
+          },
+        },
+      },
     });
+  }
+
+  async findUserByEmail(email: string): Promise<UserEntity | null> {
+    const user = await this.userRepository.findOneBy({
+      email,
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User email='${email}' not Found`);
+    }
+
+    return user;
   }
 }
