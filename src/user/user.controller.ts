@@ -32,10 +32,10 @@ export class UserController {
     );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<UserEntity> {
-    return this.userService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string): Promise<UserEntity> {
+  //   return this.userService.findOne(+id);
+  // }
 
   @Put(':id')
   update(
@@ -48,5 +48,12 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
+  }
+
+  @Get('/:userId')
+  async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto> {
+    return new ReturnUserDto(
+      await this.userService.findUserByIdUsingRelations(userId),
+    );
   }
 }

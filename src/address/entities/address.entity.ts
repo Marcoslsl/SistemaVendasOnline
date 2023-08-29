@@ -1,4 +1,5 @@
 import { CityEntity } from 'src/city/entities/city.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -26,8 +27,7 @@ export class AddressEntity {
   @Column({ name: 'cep', nullable: false })
   cep: string;
 
-  @ManyToOne(() => CityEntity, (city) => city.address)
-  @JoinColumn({ name: 'city_id' })
+  @Column({ name: 'city_id', nullable: false })
   cityId: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'bigint' })
@@ -35,4 +35,12 @@ export class AddressEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
   updatedAt: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.addresses)
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  user?: UserEntity;
+
+  @ManyToOne(() => CityEntity, (city) => city.addresses)
+  @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
+  city?: CityEntity;
 }

@@ -37,4 +37,7 @@ export class UserEntity {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
   updatedAt: number;
+
+  @OneToMany(() => AddressEntity, (add) => add.user)
+  addresses: AddressEntity[];
 }

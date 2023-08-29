@@ -16,8 +16,7 @@ export class CityEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => StateEntity, (state) => state.cities)
-  @JoinColumn({ name: 'state_id' }) // Especifica a coluna de junção
+  @Column({ name: 'state_id', nullable: false })
   stateId: number;
 
   @Column({ name: 'name', nullable: false })
@@ -29,6 +28,10 @@ export class CityEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
   updatedAt: number;
 
-  @OneToMany(() => AddressEntity, (add) => add.cityId)
-  address: AddressEntity[];
+  @OneToMany(() => AddressEntity, (add) => add.city)
+  addresses: AddressEntity[];
+
+  @ManyToOne(() => StateEntity, (state) => state.cities)
+  @JoinColumn({ name: 'state_id', referencedColumnName: 'id' })
+  state?: StateEntity;
 }

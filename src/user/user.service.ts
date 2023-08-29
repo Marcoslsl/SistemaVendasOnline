@@ -50,4 +50,14 @@ export class UserService {
   async remove(id: number) {
     return await this.userRepository.delete({ id });
   }
+
+  async findUserByIdUsingRelations(userId: number): Promise<UserEntity> {
+    console.log(userId);
+    return this.userRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: ['addresses'],
+    });
+  }
 }

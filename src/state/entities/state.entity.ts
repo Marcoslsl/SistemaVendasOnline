@@ -22,6 +22,6 @@ export class StateEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'bigint' })
   updatedAt: number;
 
-  @OneToMany(() => CityEntity, (city) => city.stateId)
+  @OneToMany(() => CityEntity, (city) => city.state)
   cities: CityEntity[];
 }
