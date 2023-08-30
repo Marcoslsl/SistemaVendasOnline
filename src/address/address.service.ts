@@ -23,11 +23,7 @@ export class AddressService {
     await this.userService.findOne(userId);
     await this.cityService.findOne(createAddressDto.cityId);
 
-    const address = { ...createAddressDto, userId };
-
-    const addressCreated = await this.addressRepository.create(address);
-    await this.addressRepository.save(addressCreated);
-    return addressCreated;
+    return await this.addressRepository.save({ ...createAddressDto, userId });
   }
 
   async findAll(): Promise<AddressEntity[]> {
