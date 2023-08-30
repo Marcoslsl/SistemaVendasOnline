@@ -12,31 +12,30 @@ export class StateService {
     private readonly stateRepository: Repository<StateEntity>,
   ) {}
 
-  async create(createStateDto: CreateStateDto): Promise<StateEntity> {
-    const stateCreated = await this.stateRepository.create(createStateDto);
-    await this.stateRepository.save(stateCreated);
-    return stateCreated;
-  }
-
   async findAll(): Promise<StateEntity[]> {
     return this.stateRepository.find();
   }
+  // async create(createStateDto: CreateStateDto): Promise<StateEntity> {
+  //   const stateCreated = await this.stateRepository.create(createStateDto);
+  //   await this.stateRepository.save(stateCreated);
+  //   return stateCreated;
+  // }
 
-  async findOne(id: number): Promise<StateEntity | null> {
-    return this.stateRepository.findOneBy({
-      id,
-    });
-  }
+  // async findOne(id: number): Promise<StateEntity> {
+  //   return this.stateRepository.findOneBy({
+  //     id,
+  //   });
+  // }
 
-  async update(
-    id: number,
-    updateStateDto: UpdateStateDto,
-  ): Promise<StateEntity> {
-    await this.stateRepository.update(id, updateStateDto);
-    return await this.stateRepository.findOneBy({ id });
-  }
+  // async update(
+  //   id: number,
+  //   updateStateDto: UpdateStateDto,
+  // ): Promise<StateEntity> {
+  //   await this.stateRepository.update(id, updateStateDto);
+  //   return await this.stateRepository.findOneBy({ id });
+  // }
 
-  async remove(id: number) {
-    return await this.stateRepository.delete({ id });
-  }
+  // async remove(id: number) {
+  //   return await this.stateRepository.delete({ id });
+  // }
 }
