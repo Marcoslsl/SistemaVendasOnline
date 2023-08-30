@@ -15,9 +15,7 @@ export class CityService {
   ) {}
 
   async create(createCityDto: CreateCityDto): Promise<CityEntity> {
-    const cityCreated = await this.cityRepository.create(createCityDto);
-    await this.cityRepository.save(cityCreated);
-    return cityCreated;
+    return await this.cityRepository.save(createCityDto);
   }
 
   async findAll(): Promise<CityEntity[]> {
@@ -36,14 +34,14 @@ export class CityService {
     return city;
   }
 
-  async update(id: number, updateCityDto: UpdateCityDto): Promise<CityEntity> {
-    await this.cityRepository.update(id, updateCityDto);
-    return await this.cityRepository.findOneBy({ id });
-  }
-
-  async remove(id: number) {
-    return await this.cityRepository.delete({ id });
-  }
+  // async update(id: number, updateCityDto: UpdateCityDto): Promise<CityEntity> {
+  //   await this.cityRepository.update(id, updateCityDto);
+  //   return await this.cityRepository.findOneBy({ id });
+  // }
+  //
+  // async remove(id: number) {
+  //   return await this.cityRepository.delete({ id });
+  // }
 
   async getAllCitiesByStateId(stateId: number) {
     return this.cacheService.getCache<CityEntity[]>(`state_${stateId}`, () =>

@@ -1,4 +1,3 @@
-import { CreateStateDto } from '../dto/create-state.dto';
 import { StateEntity } from '../entities/state.entity';
 
 export const stateEntityMock: StateEntity = {
