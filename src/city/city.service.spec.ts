@@ -5,7 +5,6 @@ import { CityService } from './city.service';
 import { CityEntity } from './entities/city.entity';
 import { cityEntityMock } from './mock/city.mock';
 import { CacheService } from '../cache/cache.service';
-import { rejects } from 'assert';
 
 describe('User2Service', () => {
   let service: CityService;

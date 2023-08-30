@@ -14,13 +14,13 @@ export class CityService {
     private readonly cacheService: CacheService,
   ) {}
 
-  async create(createCityDto: CreateCityDto): Promise<CityEntity> {
-    return await this.cityRepository.save(createCityDto);
-  }
-
-  async findAll(): Promise<CityEntity[]> {
-    return this.cityRepository.find();
-  }
+  // async create(createCityDto: CreateCityDto): Promise<CityEntity> {
+  //   return await this.cityRepository.save(createCityDto);
+  // }
+  //
+  // async findAll(): Promise<CityEntity[]> {
+  //   return this.cityRepository.find();
+  // }
 
   async findOne(id: number): Promise<CityEntity> {
     const city = await this.cityRepository.findOneBy({
