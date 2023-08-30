@@ -6,7 +6,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { ReturnUserDto } from 'src/user/dto/returnUser.dto';
 import { AuthService } from './auth.service';
 import { ReturnLogin } from './dto/return-login.dto';
 

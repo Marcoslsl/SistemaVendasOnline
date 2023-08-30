@@ -27,15 +27,12 @@ export class UserService {
     }
 
     const passwordHased = await hash(createUserDto.password, 10);
-    const user = {
+
+    return this.userRepository.save({
       ...createUserDto,
       typeUser: 1,
       password: passwordHased,
-    };
-
-    const userCreated = await this.userRepository.create(user);
-    await this.userRepository.save(userCreated);
-    return userCreated;
+    });
   }
 
   async findAll(): Promise<UserEntity[]> {
@@ -64,7 +61,6 @@ export class UserService {
   }
 
   async findUserByIdUsingRelations(userId: number): Promise<UserEntity> {
-    console.log(userId);
     return this.userRepository.findOne({
       where: {
         id: userId,
