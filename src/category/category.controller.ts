@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -20,9 +22,11 @@ import { UserType } from 'src/user/enum/user-type.enum';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Roles(UserType.Admin)
+  @UsePipes(ValidationPipe)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    return await this.categoryService.createCategory(createCategoryDto);
   }
 
   @Get()
@@ -32,9 +36,9 @@ export class CategoryController {
     );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+  @Get(':name')
+  findCategoryByName(@Param('name') name: string) {
+    return this.categoryService.findCategoryByName(name);
   }
 
   @Patch(':id')

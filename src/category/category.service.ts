@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,8 +15,35 @@ export class CategoryService {
     @InjectRepository(CategoryEntity)
     private readonly categoryRepository: Repository<CategoryEntity>,
   ) {}
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+
+  async createCategory(
+    createCategory: CreateCategoryDto,
+  ): Promise<CategoryEntity> {
+    const category = await this.findCategoryByName(createCategory.name).catch(
+      () => undefined,
+    );
+
+    if (category) {
+      throw new BadRequestException(
+        `Category name ${createCategory.name} exist`,
+      );
+    }
+
+    return this.categoryRepository.save(createCategory);
+  }
+
+  async findCategoryByName(name: string): Promise<CategoryEntity> {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        name,
+      },
+    });
+
+    if (!category) {
+      throw new NotFoundException(`Category name ${name} not found`);
+    }
+
+    return category;
   }
 
   async findAll(): Promise<CategoryEntity[]> {
@@ -21,10 +52,6 @@ export class CategoryService {
       throw new NotFoundException('Categories empty');
     }
     return categories;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
