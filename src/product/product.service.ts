@@ -8,14 +8,19 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    private readonly categoryService: CategoryService,
   ) {}
   async create(createProductDto: CreateProductDto) {
+    const category = await this.categoryService.findCategoryById(
+      createProductDto.categoryId,
+    );
     const product = await this.productRepository.findOne({
       where: {
         name: createProductDto.name,
@@ -26,7 +31,7 @@ export class ProductService {
       throw new BadRequestException('Product alredy exists');
     }
 
-    return await this.productRepository.save(createProductDto);
+    return await this.productRepository.save({ ...product, category });
   }
 
   async findAll(): Promise<ProductEntity[]> {
