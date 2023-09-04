@@ -8,12 +8,15 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ROLES_KEY, Roles } from 'src/decorators/roles.decorator';
 import { UserType } from 'src/user/enum/user-type.enum';
 import { ReturnProduct } from './dto/return-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductEntity } from './entities/product.entity';
 
 @Roles(UserType.Admin, UserType.User)
 @Controller('product')
@@ -39,19 +42,23 @@ export class ProductController {
   }
 
   @Get(':id')
-  findProducById(@Param('id') id: string) {
-    return this.productService.findProducById(+id);
+  async findProducById(@Param('id') id: string) {
+    return await this.productService.findProducById(+id);
   }
-  //
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-  //   return this.productService.update(+id, updateProductDto);
-  // }
-  //
+
+  @Roles(UserType.Admin)
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<ProductEntity> {
+    return await this.productService.updateProduct(+id, updateProductDto);
+  }
+
   @Delete(':id')
   @UsePipes(ValidationPipe)
   @Roles(UserType.Admin)
-  deleteProduct(@Param('id') id: string) {
-    return this.productService.deleteProduct(+id);
+  async deleteProduct(@Param('id') id: string) {
+    return await this.productService.deleteProduct(+id);
   }
 }
