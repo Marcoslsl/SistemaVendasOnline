@@ -6,6 +6,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { createProductMock, productMock } from './mock/product.mock';
 import { CategoryService } from '../category/category.service';
 import { categoryMock } from '../category/mock/category.mock';
+import { ReturnDeleteMock } from './mock/return-delete.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -27,7 +28,8 @@ describe('ProductService', () => {
           useValue: {
             find: jest.fn().mockResolvedValue([productMock]),
             save: jest.fn().mockResolvedValue(productMock),
-            findOne: jest.fn().mockResolvedValue(undefined),
+            findOne: jest.fn().mockResolvedValue(productMock),
+            delete: jest.fn().mockResolvedValue(ReturnDeleteMock),
           },
         },
       ],
@@ -62,6 +64,8 @@ describe('ProductService', () => {
   });
 
   it('should return a product', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
+
     const producst = await service.create(createProductMock);
     expect(producst).toEqual(productMock);
   });
@@ -73,5 +77,25 @@ describe('ProductService', () => {
   it('should return error in save data', async () => {
     jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
     expect(service.create(createProductMock)).rejects.toThrow();
+  });
+
+  it('should return a product in find by id', async () => {
+    const producst = await service.findProducById(productMock.id);
+    expect(producst).toEqual(productMock);
+  });
+
+  it('should return an error in find by id', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
+    expect(service.findProducById(productMock.id)).rejects.toThrow();
+  });
+
+  it('should return an error in find by id', async () => {
+    jest.spyOn(productRepository, 'findOne').mockRejectedValue(new Error());
+    expect(service.findProducById(productMock.id)).rejects.toThrow();
+  });
+
+  it('should return deleted true in delete product', async () => {
+    const deleted = await service.deleteProduct(productMock.id);
+    expect(deleted).toEqual(ReturnDeleteMock);
   });
 });
