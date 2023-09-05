@@ -4,12 +4,14 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CartEntity } from './entities/cart.entity';
 import { Repository } from 'typeorm';
+import { CartProductService } from 'src/cart-product/cart-product.service';
 
 @Injectable()
 export class CartService {
   constructor(
     @InjectRepository(CartEntity)
     private readonly cartRepository: Repository<CartEntity>,
+    private readonly cartProductService: CartProductService,
   ) {}
 
   async verifyActiveCart(userId: number): Promise<CartEntity> {
@@ -41,22 +43,7 @@ export class CartService {
       return this.createCart(userId);
     });
 
+    await this.cartProductService.insertProductInCart(insertCartDto, cart);
     return cart;
-  }
-
-  findAll() {
-    return `This action returns all cart`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
-  }
-
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
   }
 }

@@ -8,5 +8,6 @@ import { CartProductEntity } from './entities/cart-product.entity';
   imports: [TypeOrmModule.forFeature([CartProductEntity])],
   controllers: [CartProductController],
   providers: [CartProductService],
+  exports: [CartProductService],
 })
 export class CartProductModule {}
